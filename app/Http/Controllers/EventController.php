@@ -16,19 +16,31 @@ class EventController extends Controller
 
     public function home()
     {
-        return view('home');
+        $events = Event::latest()->take(3)->get();
+
+        return view('home', compact('events'));
     }
 
     public function userIndex()
     {
         $events = Event::with('category')->latest()->get();
 
-        return view('events.user', compact('events'));
+        return view('user.events.index', compact('events'));
     }
 
     public function userShow(Event $event)
     {
         return view('user.events.show', compact('event'));
+    }
+
+    public function about()
+    {
+        return view('user.about');
+    }
+
+    public function contact()
+    {
+        return view('user.contact');
     }
 
     /**

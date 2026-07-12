@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('registrations', function (Blueprint $table) {
@@ -25,6 +22,11 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete();
 
+            // Data peserta
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+
             // Status pendaftaran
             $table->enum('status', ['Pending', 'Approved', 'Rejected'])
                   ->default('Pending');
@@ -33,9 +35,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('registrations');

@@ -12,6 +12,9 @@ class Registration extends Model
     protected $fillable = [
         'user_id',
         'event_id',
+        'name',
+        'email',
+        'phone',
         'status',
         'created_at',
         'updated_at'

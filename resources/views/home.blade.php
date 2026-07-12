@@ -2,136 +2,276 @@
 
 @section('content')
 
-<div class="hero">
+<!-- HERO -->
+<section class="hero">
 
-    <div class="hero-text">
+    <div class="hero-content">
 
-        <h1>Temukan Event Kampus Terbaik</h1>
+        <h1>Selamat Datang di Event Kampus</h1>
 
         <p>
-            Ikuti seminar, workshop, lomba, dan berbagai kegiatan kampus
-            untuk mengembangkan kemampuan serta menambah pengalaman.
+            Temukan berbagai seminar, workshop, lomba, dan kegiatan kampus
+            yang dapat mengembangkan kemampuan serta menambah pengalamanmu.
         </p>
 
-        <a href="{{ route('events.user') }}" class="btn-hero">
-            Lihat Event
+        <a href="{{ route('user.events.index') }}" class="btn-hero">
+            Jelajahi Event
         </a>
 
     </div>
 
-</div>
+</section>
 
-<div class="section">
 
-    <h2>Kenapa Bergabung?</h2>
+<!-- KATEGORI -->
+<section class="category-section">
 
-    <div class="card-wrapper">
+    <h2>Kategori Event</h2>
 
-        <div class="card">
-            <h3>Seminar</h3>
-            <p>Menambah wawasan dari pembicara profesional.</p>
+    <div class="category-list">
+
+        <div class="category-card">
+            🎓
+            <h4>Seminar</h4>
         </div>
 
-        <div class="card">
-            <h3>Lomba</h3>
-            <p>Mengasah kemampuan dan mendapatkan prestasi.</p>
+        <div class="category-card">
+            💻
+            <h4>Workshop</h4>
         </div>
 
-        <div class="card">
-            <h3>Networking</h3>
-            <p>Bertemu teman dan relasi baru dari berbagai jurusan.</p>
+        <div class="category-card">
+            🏆
+            <h4>Lomba</h4>
+        </div>
+
+        <div class="category-card">
+            🤝
+            <h4>Organisasi</h4>
         </div>
 
     </div>
 
-</div>
+</section>
+
+
+<!-- EVENT TERBARU -->
+<section class="event-section">
+
+    <div class="section-header">
+
+        <h2>Event Terbaru</h2>
+
+        <a href="{{ route('user.events.index') }}">
+            Lihat Semua
+        </a>
+
+    </div>
+
+    <div class="event-list">
+
+        @forelse($events as $event)
+
+        <div class="event-card">
+
+            <h3>{{ $event->title }}</h3>
+
+            <p>{{ $event->tagline }}</p>
+
+            <span>
+                📅 {{ $event->date }}
+            </span>
+
+            <span>
+                📍 {{ $event->location }}
+            </span>
+
+            <a href="{{ route('user.events.show',$event->id) }}">
+                Detail Event
+            </a>
+
+        </div>
+
+        @empty
+
+        <p>Belum ada event.</p>
+
+        @endforelse
+
+    </div>
+
+</section>
 
 @endsection
 
 <style>
 
+/* HERO */
 .hero{
-    background:linear-gradient(135deg,#2563eb,#1e40af);
-    color:white;
-    border-radius:20px;
-    padding:70px 50px;
+    background: linear-gradient(135deg,#2563eb,#1e40af);
+    color:#fff;
     text-align:center;
+    padding:90px 20px;
+}
+
+.hero-content{
+    max-width:700px;
+    margin:auto;
 }
 
 .hero h1{
-    font-size:42px;
-    margin-bottom:15px;
+    font-size:48px;
+    margin-bottom:20px;
 }
 
 .hero p{
     font-size:18px;
-    max-width:700px;
-    margin:auto;
-    line-height:1.7;
+    line-height:1.8;
+    margin-bottom:35px;
 }
 
 .btn-hero{
     display:inline-block;
-    margin-top:30px;
-    background:white;
+    padding:14px 35px;
+    background:#fff;
     color:#2563eb;
-    padding:14px 28px;
-    border-radius:10px;
+    border-radius:30px;
     text-decoration:none;
     font-weight:bold;
     transition:.3s;
 }
 
 .btn-hero:hover{
-    background:#e2e8f0;
+    background:#f3f4f6;
+    transform:translateY(-3px);
 }
 
-.section{
-    margin-top:60px;
+/* KATEGORI */
+.category-section{
+    max-width:1200px;
+    margin:70px auto;
+    padding:0 20px;
 }
 
-.section h2{
+.category-section h2{
     text-align:center;
     margin-bottom:35px;
-    color:#1e293b;
+    color:#1f2937;
 }
 
-.card-wrapper{
+.category-list{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.category-card{
+    background:#fff;
+    text-align:center;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    font-size:40px;
+    transition:.3s;
+}
+
+.category-card h4{
+    margin-top:15px;
+    color:#374151;
+    font-size:20px;
+}
+
+.category-card:hover{
+    transform:translateY(-8px);
+}
+
+/* EVENT */
+.event-section{
+    max-width:1200px;
+    margin:70px auto;
+    padding:0 20px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.section-header h2{
+    color:#1f2937;
+}
+
+.section-header a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.event-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     gap:25px;
 }
 
-.card{
-    background:white;
+.event-card{
+    background:#fff;
     border-radius:15px;
-    padding:30px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-    text-align:center;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    transition:.3s;
 }
 
-.card h3{
-    margin-bottom:15px;
+.event-card:hover{
+    transform:translateY(-8px);
+}
+
+.event-card h3{
     color:#2563eb;
+    margin-bottom:10px;
 }
 
-.card p{
-    color:#64748b;
+.event-card p{
+    color:#6b7280;
+    margin-bottom:15px;
 }
 
+.event-card span{
+    display:block;
+    margin-bottom:8px;
+    color:#374151;
+}
+
+.event-card a{
+    display:inline-block;
+    margin-top:15px;
+    background:#2563eb;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.event-card a:hover{
+    background:#1d4ed8;
+}
+
+/* RESPONSIVE */
 @media(max-width:768px){
 
-    .hero{
-        padding:50px 25px;
-    }
+.hero h1{
+    font-size:34px;
+}
 
-    .hero h1{
-        font-size:30px;
-    }
+.hero p{
+    font-size:16px;
+}
 
-    .card-wrapper{
-        grid-template-columns:1fr;
-    }
+.section-header{
+    flex-direction:column;
+    gap:10px;
+}
 
 }
 

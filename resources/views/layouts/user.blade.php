@@ -17,9 +17,10 @@
 
     <ul class="nav-menu">
         <li><a href="{{ route('home') }}">Home</a></li>
-        <li><a href="#">Event</a></li>
-        <li><a href="#">Tentang</a></li>
-        <li><a href="#">Kontak</a></li>
+        <li><a href="{{ route('user.events.index') }}">Event</a></li>
+        <li><a href="{{ route('user.registrations.index') }}">Riwayat</a></li>
+        <li><a href="{{ route('user.about') }}">Tentang</a></li>
+        <li><a href="{{ route('user.contact') }}">Kontak</a></li>
     </ul>
 
     <div class="nav-right">
