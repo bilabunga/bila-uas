@@ -2,99 +2,146 @@
 
 @section('content')
 
-<div class="admin-container">
+<div class="dashboard">
 
-    <div class="main-content">
+    <div class="header">
 
-        <div class="header">
+        <div>
+            <h1>Dashboard Admin</h1>
+            <p>Selamat datang kembali. Kelola seluruh event kampus dengan mudah.</p>
+        </div>
+
+    </div>
+
+    <div class="card-wrapper">
+
+        <div class="card">
+            <h4>Total Event</h4>
+            <h2>{{ $totalEvents }}</h2>
+        </div>
+
+        <div class="card">
+            <h4>Total Peserta</h4>
+            <h2>{{ $totalPeserta }}</h2>
+        </div>
+
+        <div class="card">
+            <h4>Total Kategori</h4>
+            <h2>{{ $totalCategories }}</h2>
+        </div>
+
+        <div class="card">
+            <h4>Total Pendaftaran</h4>
+            <h2>{{ $totalPendaftaran }}</h2>
+        </div>
+
+    </div>
+
+    <div class="event-section">
+
+        <div class="section-header">
+
             <div>
-                <h1>Dashboard Admin</h1>
-                <p>Kelola seluruh event kampus dengan mudah.</p>
-            </div>
-
-            <a href="{{ route('events.create') }}" class="btn-add">
-                + Tambah Event
-            </a>
-        </div>
-
-        <div class="card-wrapper">
-
-            <div class="card">
-                <h4>Total Event</h4>
-                <h2>{{ $totalEvents }}</h2>
-            </div>
-
-            <div class="card">
-                <h4>Total Peserta</h4>
-                <h2>{{ $totalPeserta }}</h2>
-            </div>
-
-            <div class="card">
-                <h4>Kategori</h4>
-                <h2>{{ $totalCategories }}</h2>
-            </div>
-
-            <div class="card">
-                <h4>Pendaftaran</h4>
-                <h2>{{ $totalPendaftaran }}</h2>
-            </div>
-
-        </div>
-
-        <div class="table-box">
-
-            <div class="table-header">
                 <h2>Event Terbaru</h2>
-
-                <a href="{{ route('events.index') }}">
-                    Lihat Semua
-                </a>
+                <p>Kelola seluruh event kampus yang telah dibuat.</p>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Judul Event</th>
-                        <th>Kategori</th>
-                        <th>Tanggal</th>
-                        <th>Lokasi</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
+            <a href="{{ route('events.index') }}" class="lihat-semua">
+                Lihat Semua
+            </a>
 
-                <tbody>
+        </div>
 
-                    @forelse($events as $event)
-                    <tr>
-                        <td>{{ $event->title }}</td>
-                        <td>{{ $event->category->name ?? '-' }}</td>
-                        <td>{{ $event->date }}</td>
-                        <td>{{ $event->location }}</td>
-                        <td>
-                            <a href="{{ route('events.edit', $event->id) }}">Edit</a> |
+        <div class="event-grid">
 
-                            <form id="delete-{{ $event->id }}"
-                                  action="{{ route('events.destroy', $event->id) }}"
-                                  method="POST"
-                                  style="display:inline;">
-                                @csrf
-                                @method('DELETE')
+            @forelse($events as $event)
 
-                                <a href="#"
-                                   onclick="event.preventDefault(); document.getElementById('delete-{{ $event->id }}').submit();">
-                                    Hapus
-                                </a>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">Belum ada event.</td>
-                    </tr>
-                    @endforelse
+            <div class="event-card">
 
-                </tbody>
-            </table>
+                @if($event->image)
+
+                    <img
+                        src="{{ asset('storage/'.$event->image) }}"
+                        class="event-image">
+
+                @else
+
+                    <div class="image-empty">
+                        Belum Ada Poster
+                    </div>
+
+                @endif
+
+                <div class="event-content">
+
+                    <span class="badge">
+                        {{ $event->category->name ?? '-' }}
+                    </span>
+
+                    <h3>
+                        {{ $event->title }}
+                    </h3>
+
+                    <p>
+                        {{ $event->tagline }}
+                    </p>
+
+                    <div class="info">
+
+                        <div>
+                            <strong>Tanggal</strong>
+                            <span>{{ $event->date }}</span>
+                        </div>
+
+                        <div>
+                            <strong>Lokasi</strong>
+                            <span>{{ $event->location }}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="action">
+
+                        <a
+                            href="{{ route('events.edit',$event->id) }}"
+                            class="btn-edit">
+
+                            Edit
+
+                        </a>
+
+                        <form
+                            action="{{ route('events.destroy',$event->id) }}"
+                            method="POST">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                class="btn-delete"
+                                onclick="return confirm('Yakin ingin menghapus event ini?')">
+
+                                Hapus
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @empty
+
+            <div class="empty">
+
+                Belum ada event.
+
+            </div>
+
+            @endforelse
 
         </div>
 
@@ -103,168 +150,281 @@
 </div>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Poppins',sans-serif;
+    }
 
-body{
-    background:#f4f7fb;
-}
+    body{
+        background:#F8F5F2;
+    }
 
-.admin-container{
-    display:flex;
-    min-height:100vh;
-}
+    .dashboard{
+        width:100%;
+    }
 
-/* Main */
-.main-content{
-    flex:1;
-    padding:35px;
-}
+    /* ================= HEADER ================= */
 
-/* Header */
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
-}
+    .header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:35px;
+    }
 
-.header h1{
-    font-size:32px;
-    color:#1e293b;
-}
+    .header h1{
+        font-size:32px;
+        color:#6F4E37;
+        margin-bottom:8px;
+    }
 
-.header p{
-    color:#64748b;
-    margin-top:5px;
-}
+    .header p{
+        color:#8B7A6B;
+        font-size:15px;
+    }
 
-.btn-add{
-    text-decoration:none;
-    background:#2563eb;
-    color:#fff;
-    padding:12px 22px;
-    border-radius:10px;
-    font-weight:600;
-    transition:.3s;
-}
+    /* ================= CARD STATISTIK ================= */
 
-.btn-add:hover{
-    background:#1d4ed8;
-}
+    .card-wrapper{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:18px;
+        margin-bottom:40px;
+    }
 
-/* Card */
-.card-wrapper{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-    margin-bottom:35px;
-}
+    .card{
+        background:#fff;
+        padding:22px;
+        border-radius:16px;
+        border:1px solid #EEE4DB;
+        box-shadow:0 6px 18px rgba(0,0,0,.05);
+        transition:.3s;
+    }
 
-.card{
-    background:#fff;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
+    .card:hover{
+        transform:translateY(-4px);
+    }
 
-.card h4{
-    color:#64748b;
-    font-size:15px;
-    margin-bottom:10px;
-}
+    .card h4{
+        color:#8B7A6B;
+        font-size:14px;
+        margin-bottom:10px;
+    }
 
-.card h2{
-    color:#2563eb;
-    font-size:34px;
-}
+    .card h2{
+        color:#6F4E37;
+        font-size:30px;
+    }
 
-/* Table */
-.table-box{
-    background:#fff;
-    border-radius:15px;
-    padding:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
+    /* ================= EVENT ================= */
 
-.table-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
+    .event-section{
+        margin-top:20px;
+    }
 
-.table-header h2{
-    color:#1e293b;
-}
+    .section-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+    }
 
-.table-header a{
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:600;
-}
+    .section-header h2{
+        color:#6F4E37;
+        font-size:26px;
+    }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-}
+    .section-header p{
+        color:#8B7A6B;
+        font-size:14px;
+    }
 
-thead{
-    background:#2563eb;
-    color:#fff;
-}
+    .section-header a{
+        text-decoration:none;
+        color:#B88A6D;
+        font-weight:600;
+    }
 
-th,td{
-    padding:15px;
-    text-align:left;
-}
+    .section-header a:hover{
+        color:#8C6845;
+    }
 
-tbody tr{
-    border-bottom:1px solid #eee;
-}
+    .event-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(230px,250px));
+        gap:18px;
+        justify-content:flex-start;
+    }
 
-tbody tr:hover{
-    background:#f8fafc;
-}
+    .event-card{
+        width:250px;
+        background:#fff;
+        border-radius:15px;
+        overflow:hidden;
+        border:1px solid #EEE4DB;
+        box-shadow:0 6px 18px rgba(0,0,0,.05);
+        transition:.3s;
+    }
 
-td a{
-    text-decoration:none;
-    color:#2563eb;
-    font-weight:600;
-    margin-right:10px;
-}
+    .event-card:hover{
+        transform:translateY(-5px);
+    }
 
-td a:hover{
-    color:#1d4ed8;
-}
+   .event-image{
+        width:100%;
+        height:150px;
+        object-fit:cover;
+    }
 
-/* Responsive */
-@media(max-width:992px){
+    .image-empty{
+        width:100%;
+        height:150px;
+        background:#EFE5DC;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:#8B7A6B;
+        font-size:13px;
+    }
+
+    .event-content{
+        padding:15px;
+    }
+
+    .badge{
+        display:inline-block;
+        background:#F3E8DD;
+        color:#8A6448;
+        padding:4px 10px;
+        border-radius:20px;
+        font-size:11px;
+        margin-bottom:10px;
+    }
+
+    .event-content h3{
+        color:#6F4E37;
+        font-size:18px;
+        margin-bottom:6px;
+    }
+
+    .event-content p{
+        color:#8B7A6B;
+        font-size:13px;
+        line-height:1.5;
+        margin-bottom:12px;
+    }
+
+    .info{
+        display:grid;
+        grid-template-columns:1fr;
+        gap:10px;
+        margin-bottom:15px;
+    }
+
+    .info strong{
+        display:block;
+        color:#6F4E37;
+        font-size:12px;
+        margin-bottom:3px;
+    }
+
+    .info span{
+        color:#8B7A6B;
+        font-size:12px;
+    }
+
+    .action{
+        display:flex;
+        gap:8px;
+    }
+
+    .action form{
+        flex:1;
+    }
+
+    .btn-edit{
+        flex:1;
+        text-align:center;
+        text-decoration:none;
+        background:#B88A6D;
+        color:#fff;
+        padding:8px;
+        border-radius:8px;
+        font-size:13px;
+        font-weight:600;
+    }
+
+    .btn-edit:hover{
+        background:#A8795C;
+    }
+
+    .btn-delete{
+        width:100%;
+        border:none;
+        background:#D97A7A;
+        color:#fff;
+        padding:8px;
+        border-radius:8px;
+        cursor:pointer;
+        font-size:13px;
+        font-weight:600;
+    }
+
+    .btn-delete:hover{
+        background:#C95E5E;
+    }
+
+    .empty{
+        grid-column:1/-1;
+        text-align:center;
+        background:#fff;
+        padding:35px;
+        border-radius:15px;
+        color:#8B7A6B;
+        border:1px solid #EEE4DB;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:992px){
+
     .card-wrapper{
         grid-template-columns:repeat(2,1fr);
     }
-}
 
-@media(max-width:768px){
+    .event-grid{
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    }
+
+    .event-card{
+        width:100%;
+    }
+
+    }
+
+    @media(max-width:768px){
+
     .header{
         flex-direction:column;
         align-items:flex-start;
-        gap:15px;
+        gap:18px;
     }
 
     .card-wrapper{
         grid-template-columns:1fr;
     }
 
-    table{
-        display:block;
-        overflow-x:auto;
+    .event-grid{
+        grid-template-columns:1fr;
     }
-}
+
+    .action{
+        flex-direction:column;
+    }
+
+    }
 </style>
 
 @endsection

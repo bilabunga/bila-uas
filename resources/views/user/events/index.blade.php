@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="header">
+<div class="home-header">
 
     <h1>Daftar Event Kampus</h1>
 
@@ -12,49 +12,76 @@
 
 </div>
 
-<div class="event-wrapper">
+    <div class="event-wrapper">
 
-    @forelse($events as $event)
+        @forelse($events as $event)
 
-    <div class="event-card">
+        <div class="event-card">
 
-        <h2>{{ $event->title }}</h2>
+            @if($event->image)
 
-        @if($event->tagline)
-            <p class="tagline">{{ $event->tagline }}</p>
-        @endif
+                <img src="{{ asset('storage/'.$event->image) }}"
+                     class="event-image">
 
-        <div class="info">
+            @else
 
-            <p><strong>Kategori :</strong> {{ $event->category->name ?? '-' }}</p>
+                <div class="image-empty">
+                    Belum Ada Poster
+                </div>
 
-            <p><strong>Tanggal :</strong> {{ $event->date }}</p>
+            @endif
 
-            <p><strong>Lokasi :</strong> {{ $event->location }}</p>
+            <div class="event-content">
 
-            <p><strong>Kuota :</strong> {{ $event->quota }}</p>
+                <span class="badge">
+                    {{ $event->category->name ?? 'Event' }}
+                </span>
+
+                <h3>{{ $event->title }}</h3>
+
+                @if($event->tagline)
+                    <p>{{ $event->tagline }}</p>
+                @endif
+
+                <div class="info">
+
+                    <div>
+                        <strong>Tanggal</strong>
+                        <span>{{ $event->date }}</span>
+                    </div>
+
+                    <div>
+                        <strong>Lokasi</strong>
+                        <span>{{ $event->location }}</span>
+                    </div>
+
+                    <div>
+                        <strong>Kuota</strong>
+                        <span>{{ $event->quota }} Peserta</span>
+                    </div>
+
+                </div>
+
+                <a href="{{ route('user.events.show',$event->id) }}"
+                   class="btn-detail">
+                    Lihat Detail
+                </a>
+
+            </div>
 
         </div>
 
-        <a href="{{ route('user.events.show',$event->id) }}" class="btn-detail">
-            Lihat Detail
-        </a>
+        @empty
+
+        <div class="empty">
+
+            <h3>Belum ada event.</h3>
+
+        </div>
+
+        @endforelse
 
     </div>
-
-    @empty
-
-    <div class="empty">
-
-        <h3>Belum ada event.</h3>
-
-    </div>
-
-    @endforelse
-
-</div>
-
-@endsection
 
 <style>
 
@@ -65,158 +92,159 @@
     font-family:'Poppins',sans-serif;
 }
 
-body{
-    background:#f4f7fb;
+.home-header{
+    margin-bottom:30px;
 }
 
-.event-page{
-    max-width:1200px;
-    margin:40px auto;
-    padding:0 20px;
+.home-header h1{
+    font-size:32px;
+    color:#6F4E37;
+    margin-bottom:8px;
 }
 
-/* Header */
-
-.event-header{
-    text-align:center;
-    margin-bottom:40px;
+.home-header p{
+    color:#8B7A6B;
 }
 
-.event-header h1{
-    font-size:38px;
-    color:#1e293b;
-    margin-bottom:10px;
-}
+/* CARD EVENT */
 
-.event-header p{
-    color:#64748b;
-    font-size:17px;
-}
-
-/* Search */
-
-.search-box{
-    margin-bottom:35px;
-    display:flex;
-    justify-content:center;
-}
-
-.search-box input{
-    width:100%;
-    max-width:500px;
-    padding:14px 18px;
-    border:1px solid #dbe2ea;
-    border-radius:12px;
-    outline:none;
-    font-size:15px;
-    transition:.3s;
-}
-
-.search-box input:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,.15);
-}
-
-/* Card */
-
-.event-container{
+.event-wrapper{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
     gap:25px;
+    margin-top:20px;
 }
 
 .event-card{
+    width:100%;
+    max-width:280px;
+    margin:auto;
     background:#fff;
-    border-radius:18px;
+    border-radius:15px;
     overflow:hidden;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border:1px solid #EEE4DB;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
     transition:.3s;
 }
 
 .event-card:hover{
-    transform:translateY(-8px);
+    transform:translateY(-5px);
 }
 
-.event-image img{
+.event-image{
     width:100%;
-    height:220px;
+    height:160px;
     object-fit:cover;
 }
 
-.event-content{
-    padding:22px;
-}
-
-.category{
-    display:inline-block;
-    background:#dbeafe;
-    color:#2563eb;
-    padding:6px 14px;
-    border-radius:20px;
+.image-empty{
+    width:100%;
+    height:160px;
+    background:#EFE5DC;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#8B7A6B;
     font-size:13px;
-    font-weight:600;
-    margin-bottom:15px;
 }
 
-.event-content h3{
-    color:#1e293b;
+.event-content{
+    padding:16px;
+}
+
+.badge{
+    display:inline-block;
+    background:#F3E8DD;
+    color:#8A6448;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:11px;
     margin-bottom:10px;
 }
 
-.event-content p{
-    color:#64748b;
+.event-content h3{
+    color:#6F4E37;
+    font-size:21px;
     margin-bottom:8px;
+    line-height:1.3;
 }
 
-.event-info{
-    margin:18px 0;
+.event-content p{
+    color:#8B7A6B;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
+
+.info{
+    display:grid;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.info strong{
+    display:block;
+    color:#6F4E37;
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+.info span{
+    color:#8B7A6B;
+    font-size:13px;
 }
 
 .btn-detail{
-    display:inline-block;
+    display:block;
     width:100%;
     text-align:center;
     text-decoration:none;
-    background:#2563eb;
+    background:#B88A6D;
     color:#fff;
-    padding:12px;
+    padding:10px;
     border-radius:10px;
     font-weight:600;
     transition:.3s;
 }
 
 .btn-detail:hover{
-    background:#1d4ed8;
+    background:#A8795C;
 }
 
-/* Empty */
-
-.empty-event{
+.empty{
     grid-column:1/-1;
+    text-align:center;
     background:#fff;
     padding:40px;
-    text-align:center;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-radius:15px;
+    border:1px solid #EEE4DB;
+    color:#8B7A6B;
 }
 
-.empty-event h3{
-    color:#2563eb;
-    margin-bottom:10px;
-}
+/* RESPONSIVE */
 
-/* Responsive */
+@media(max-width:992px){
+
+    .event-wrapper{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
 
 @media(max-width:768px){
 
-    .event-header h1{
-        font-size:30px;
+    .event-wrapper{
+        grid-template-columns:1fr;
     }
 
-    .event-container{
-        grid-template-columns:1fr;
+    .event-card{
+        max-width:100%;
     }
 
 }
 
 </style>
+
+@endsection
+
+

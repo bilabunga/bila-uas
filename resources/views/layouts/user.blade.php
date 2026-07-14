@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Kampus</title>
 
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     @vite(['resources/sass/app.scss','resources/js/app.js'])
 </head>
 <body>
@@ -26,6 +28,7 @@
     <div class="nav-right">
 
         @auth
+
             <span class="user-name">
                 Halo, {{ Auth::user()->name }}
             </span>
@@ -36,7 +39,9 @@
                 <button class="logout-btn">
                     Logout
                 </button>
+
             </form>
+
         @else
 
             <a href="{{ route('login') }}" class="login-btn">
@@ -58,33 +63,37 @@
 </body>
 
 <style>
-
-*{
+   *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Poppins,sans-serif;
+    font-family:'Poppins',sans-serif !important;
 }
 
 body{
-    background:#f4f7fb;
+    background:#F8F5F2;
+    font-family:'Poppins',sans-serif !important;
+    font-weight:400;
 }
 
+/* ===== NAVBAR ===== */
+
 .navbar{
-    height:70px;
-    background:white;
+    height:75px;
+    background:#ffd5b6;
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:0 60px;
-    box-shadow:0 2px 15px rgba(0,0,0,.08);
+    border-bottom:1px solid #EEE4DB;
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
 }
 
 .logo a{
+    font-size:28px;
+    font-weight:700 !important;
+    color:#6F4E37;
     text-decoration:none;
-    font-size:24px;
-    font-weight:bold;
-    color:#2563eb;
 }
 
 .nav-menu{
@@ -94,13 +103,14 @@ body{
 }
 
 .nav-menu a{
+    color:#8B7A6B;
     text-decoration:none;
-    color:#334155;
-    font-weight:500;
+    font-weight:500 !important;
+    transition:.3s;
 }
 
 .nav-menu a:hover{
-    color:#2563eb;
+    color:#B88A6D;
 }
 
 .nav-right{
@@ -110,29 +120,65 @@ body{
 }
 
 .user-name{
-    color:#334155;
-    font-weight:600;
+    color:#6F4E37;
+    font-weight:600 !important;
 }
 
 .login-btn,
 .logout-btn{
-    background:#2563eb;
-    color:white;
+    background:#B88A6D;
+    color:#fff;
     border:none;
-    text-decoration:none;
+    border-radius:10px;
     padding:10px 18px;
-    border-radius:8px;
+    text-decoration:none;
+    font-weight:600 !important;
     cursor:pointer;
-    font-weight:600;
+    transition:.3s;
 }
 
 .login-btn:hover,
 .logout-btn:hover{
-    background:#1d4ed8;
+    background:#A8795C;
 }
 
 .content{
     padding:40px 70px;
+}
+
+/* SEMUA HEADING DIBUAT BOLD */
+
+h1{
+    font-size:36px;
+    font-weight:700 !important;
+    color:#6F4E37;
+}
+
+h2{
+    font-size:28px;
+    font-weight:700 !important;
+    color:#6F4E37;
+}
+
+h3{
+    font-size:22px;
+    font-weight:700 !important;
+    color:#6F4E37;
+}
+
+h4{
+    font-size:18px;
+    font-weight:600 !important;
+    color:#6F4E37;
+}
+
+p{
+    color:#8B7A6B;
+    font-weight:400;
+}
+
+strong{
+    font-weight:600 !important;
 }
 
 @media(max-width:768px){
@@ -147,7 +193,7 @@ body{
     .nav-menu{
         flex-wrap:wrap;
         justify-content:center;
-        gap:20px;
+        gap:18px;
     }
 
     .content{
@@ -155,7 +201,6 @@ body{
     }
 
 }
-
 </style>
 
 </html>

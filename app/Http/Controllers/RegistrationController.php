@@ -33,7 +33,7 @@ class RegistrationController extends Controller
             'status' => 'Pending',
         ]);
 
-        return redirect()->route('user.events.index')
+        return redirect()->route('user.registrations.index')
             ->with('success', 'Pendaftaran berhasil!');
     }
 

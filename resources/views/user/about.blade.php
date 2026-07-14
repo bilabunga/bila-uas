@@ -8,53 +8,52 @@
     <h1>Tentang Event Kampus</h1>
 
     <p>
-        Event Kampus adalah sistem informasi berbasis web yang dirancang
-        untuk memudahkan mahasiswa memperoleh informasi mengenai berbagai
-        kegiatan kampus serta melakukan pendaftaran secara online dengan
-        cepat, mudah, dan praktis.
+        Event Kampus merupakan sistem informasi berbasis web yang dirancang
+        untuk memudahkan mahasiswa mendapatkan informasi kegiatan kampus
+        serta melakukan pendaftaran event secara online dengan cepat,
+        mudah, dan praktis.
     </p>
 
 </section>
+
 
 <!-- TUJUAN VISI MISI -->
 <section class="about-section">
 
     <div class="about-card">
-
-        <h2>🎯 Tujuan</h2>
+        <h2>Tujuan</h2>
 
         <p>
             Mempermudah mahasiswa dalam mencari informasi event serta
             melakukan pendaftaran secara online kapan saja dan di mana saja.
         </p>
-
     </div>
 
-    <div class="about-card">
 
-        <h2>👁️ Visi</h2>
+    <div class="about-card">
+        <h2>Visi</h2>
 
         <p>
             Menjadi media informasi dan pendaftaran event kampus yang
-            modern, mudah digunakan, dan bermanfaat bagi seluruh mahasiswa.
+            modern, mudah digunakan, dan bermanfaat bagi mahasiswa.
         </p>
-
     </div>
 
-    <div class="about-card">
 
-        <h2>🚀 Misi</h2>
+    <div class="about-card">
+        <h2>Misi</h2>
 
         <ul>
             <li>Menyediakan informasi event secara lengkap.</li>
             <li>Mempermudah proses pendaftaran peserta.</li>
-            <li>Meningkatkan partisipasi mahasiswa dalam kegiatan kampus.</li>
+            <li>Meningkatkan partisipasi mahasiswa.</li>
             <li>Mendukung digitalisasi kegiatan kampus.</li>
         </ul>
-
     </div>
 
 </section>
+
+
 
 <!-- ALUR -->
 <section class="flow">
@@ -64,7 +63,6 @@
     <div class="flow-container">
 
         <div class="flow-card">
-
             <div class="number">1</div>
 
             <h3>Pilih Event</h3>
@@ -72,36 +70,35 @@
             <p>
                 Pilih event yang ingin kamu ikuti sesuai minat.
             </p>
-
         </div>
 
-        <div class="flow-card">
 
+        <div class="flow-card">
             <div class="number">2</div>
 
             <h3>Daftar Event</h3>
 
             <p>
-                Lengkapi data pendaftaran secara online.
+                Isi data pendaftaran secara online.
             </p>
-
         </div>
 
-        <div class="flow-card">
 
+        <div class="flow-card">
             <div class="number">3</div>
 
             <h3>Ikuti Event</h3>
 
             <p>
-                Hadiri event sesuai jadwal yang telah ditentukan.
+                Hadiri event sesuai jadwal yang tersedia.
             </p>
-
         </div>
 
     </div>
 
 </section>
+
+
 
 <!-- PENGEMBANG -->
 <section class="developer">
@@ -111,7 +108,7 @@
     <div class="developer-card">
 
         <div class="avatar">
-            👩🏻‍💻
+            👤
         </div>
 
         <h3>Nabila Bunga A</h3>
@@ -125,6 +122,8 @@
 
 </section>
 
+
+
 <!-- PENUTUP -->
 <section class="closing">
 
@@ -132,7 +131,7 @@
 
     <p>
         Temukan berbagai seminar, workshop, lomba, dan kegiatan menarik
-        lainnya. Daftar sekarang dan jadilah bagian dari setiap pengalaman
+        lainnya. Daftar sekarang dan jadilah bagian dari pengalaman
         berharga di kampus.
     </p>
 
@@ -142,57 +141,81 @@
 
 </section>
 
-@endsection
-
 <style>
-
-.about-header{
-    background:linear-gradient(135deg,#2563eb,#1e40af);
-    color:#fff;
-    text-align:center;
-    padding:80px 20px;
+/* ===== BACKGROUND ===== */
+.about-header,
+.about-section,
+.flow,
+.developer{
+    background:#FCF8F5;
 }
 
-.about-header h1{
-    font-size:42px;
+/* ===== HEADER CARD ===== */
+.about-header{
+    padding:70px 20px;
+}
+
+.header-box{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:45px;
+    text-align:center;
+    border-radius:25px;
+    border:1px solid #EEE4DB;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.header-box h1{
+    color:#6F4E37;
+    font-size:40px;
+    font-weight:800;
     margin-bottom:20px;
 }
 
-.about-header p{
-    max-width:750px;
-    margin:auto;
+.header-box p{
+    color:#8B7A6B;
     line-height:1.8;
+    font-size:16px;
 }
 
+/* ===== TUJUAN VISI MISI ===== */
 .about-section{
     max-width:1200px;
-    margin:70px auto;
-    padding:0 20px;
+    margin:auto;
+    padding:40px 20px 70px;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
     gap:25px;
 }
 
 .about-card{
-    background:#fff;
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    background:white;
+    padding:35px;
+    border-radius:22px;
+    border:1px solid #EEE4DB;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
     transition:.3s;
+
 }
 
 .about-card:hover{
     transform:translateY(-8px);
 }
 
-.about-card h2{
-    color:#2563eb;
-    margin-bottom:20px;
+.icon{
+    font-size:35px;
+    margin-bottom:15px;
 }
 
+.about-card h2{
+    color:#6F4E37;
+    margin-bottom:15px;
+}
 .about-card p,
+
 .about-card li{
-    color:#64748b;
+    color:#8B7A6B;
     line-height:1.8;
 }
 
@@ -200,75 +223,87 @@
     padding-left:20px;
 }
 
-/* Flow */
-
+/* ===== ALUR EVENT ===== */
 .flow{
-    max-width:1200px;
-    margin:80px auto;
-    padding:0 20px;
+    padding:70px 20px;
 }
 
 .flow h2{
     text-align:center;
+    color:#6F4E37;
+    font-size:32px;
     margin-bottom:40px;
-    color:#2563eb;
 }
 
 .flow-container{
+    max-width:1200px;
+    margin:auto;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:25px;
 }
 
 .flow-card{
-    background:#fff;
-    padding:30px;
-    border-radius:18px;
+    background:white;
+    padding:35px 25px;
     text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-radius:22px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.flow-card:hover{
+    transform:translateY(-8px);
 }
 
 .number{
     width:60px;
     height:60px;
-    background:#2563eb;
-    color:#fff;
+    background:#B88A6D;
+    color:white;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    margin:auto;
+    margin:0 auto 20px;
     font-size:24px;
     font-weight:bold;
-    margin-bottom:20px;
 }
 
-/* Developer */
+.flow-card h3{
+    color:#6F4E37;
+}
 
+.flow-card p{
+    color:#8B7A6B;
+}
+
+/* ===== DEVELOPER ===== */
 .developer{
-    max-width:700px;
-    margin:80px auto;
+    padding:70px 20px;
     text-align:center;
 }
 
 .developer h2{
-    color:#2563eb;
+    color:#6F4E37;
     margin-bottom:30px;
 }
 
 .developer-card{
-    background:#fff;
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
 .avatar{
     width:90px;
     height:90px;
     margin:auto;
+    background:#F3E8DD;
     border-radius:50%;
-    background:#dbeafe;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -276,17 +311,26 @@
     margin-bottom:20px;
 }
 
-/* Closing */
+.developer-card h3{
+    color:#6F4E37;
+}
 
+.developer-card p{
+    color:#8B7A6B;
+    line-height:1.8;
+}
+
+/* ===== PENUTUP ===== */
 .closing{
-    background:#2563eb;
-    color:#fff;
+    background:linear-gradient(135deg,#fdd6bb);
+    color:white;
     text-align:center;
     padding:70px 20px;
-    margin-top:80px;
+    margin-top:50px;
 }
 
 .closing h2{
+    font-size:32px;
     margin-bottom:20px;
 }
 
@@ -299,25 +343,26 @@
 
 .btn-about{
     display:inline-block;
-    text-decoration:none;
-    background:#fff;
-    color:#2563eb;
-    padding:14px 30px;
+    background:white;
+    color:#6F4E37;
+    padding:14px 35px;
     border-radius:30px;
-    font-weight:600;
+    text-decoration:none;
+    font-weight:700;
     transition:.3s;
 }
 
 .btn-about:hover{
-    background:#f3f4f6;
+    background:#F3E8DD;
+
 }
 
+/* ===== MOBILE ===== */
 @media(max-width:768px){
-
-.about-header h1{
-    font-size:32px;
+    .header-box h1{
+        font-size:30px;
+    }
 }
-
-}
-
 </style>
+
+@endsection

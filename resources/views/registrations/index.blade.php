@@ -23,94 +23,86 @@
 
         <tbody>
 
-            @forelse($registrations as $registration)
+        @forelse($registrations as $registration)
 
-            <tr>
+        <tr>
 
-                <td>{{ $registration->name }}</td>
+            <td>{{ $registration->name }}</td>
+            <td>{{ $registration->email }}</td>
+            <td>{{ $registration->phone }}</td>
+            <td>{{ $registration->event->title ?? '-' }}</td>
 
-                <td>{{ $registration->email }}</td>
+            <td>
+                @if($registration->status == 'Pending')
+                    <span class="status-pending">Pending</span>
+                @elseif($registration->status == 'Approved')
+                    <span class="status-approved">Approved</span>
+                @else
+                    <span class="status-rejected">Rejected</span>
+                @endif
+            </td>
 
-                <td>{{ $registration->phone }}</td>
+            <td class="aksi">
 
-                <td>{{ $registration->event->title ?? '-' }}</td>
+                @if($registration->status == 'Pending')
 
-                <td>
-                    @if($registration->status == 'Pending')
-                        <span style="color: orange; font-weight:600;">
-                            Pending
-                        </span>
-                    @elseif($registration->status == 'Approved')
-                        <span style="color: green; font-weight:600;">
-                            Approved
-                        </span>
-                    @else
-                        <span style="color: red; font-weight:600;">
-                            Rejected
-                        </span>
-                    @endif
-                </td>
+                <form action="{{ route('registrations.approve',$registration->id) }}"
+                      method="POST"
+                      style="display:inline;">
 
+                    @csrf
 
-                <td>
+                    <button type="submit" class="acc">
+                        ACC
+                    </button>
 
-                    @if($registration->status == 'Pending')
+                </form>
 
-                    <form action="{{ route('registrations.approve', $registration->id) }}"
-                          method="POST"
-                          style="display:inline;">
+                <form action="{{ route('registrations.reject',$registration->id) }}"
+                      method="POST"
+                      style="display:inline;">
 
-                        @csrf
+                    @csrf
 
-                        <button class="acc">
-                            ACC
-                        </button>
+                    <button type="submit" class="tolak">
+                        Tolak
+                    </button>
 
-                    </form>
+                </form>
 
+                @endif
 
-                    <form action="{{ route('registrations.reject', $registration->id) }}"
-                          method="POST"
-                          style="display:inline;">
+                <form action="{{ route('registrations.destroy',$registration->id) }}"
+                      method="POST"
+                      style="display:inline;">
 
-                        @csrf
+                    @csrf
+                    @method('DELETE')
 
-                        <button class="tolak">
-                            Tolak
-                        </button>
+                    <button
+                        type="submit"
+                        class="hapus"
+                        onclick="return confirm('Yakin ingin menghapus data ini?')">
 
-                    </form>
+                        Hapus
 
-                    @endif
+                    </button>
 
+                </form>
 
-                    <form action="{{ route('registrations.destroy', $registration->id) }}"
-                          method="POST"
-                          style="display:inline;">
+            </td>
 
-                        @csrf
-                        @method('DELETE')
+        </tr>
 
-                        <button class="hapus"
-                                onclick="return confirm('Yakin ingin menghapus data ini?')">
-                            Hapus
-                        </button>
+        @empty
 
-                    </form>
+        <tr>
+            <td colspan="6" class="empty">
+                Belum ada data pendaftaran.
+            </td>
+        </tr>
 
-                </td>
-
-            </tr>
-
-            @empty
-
-            <tr>
-                <td colspan="6" class="empty">
-                    Belum ada data pendaftaran.
-                </td>
-            </tr>
-
-            @endforelse
+        @endforelse
 
         </tbody>
 
@@ -118,103 +110,141 @@
 
 </div>
 
-
 <style>
+
+/* ===== CARD ===== */
 
 .table-box{
     background:#fff;
-    border-radius:15px;
     padding:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-radius:18px;
+    border:1px solid #EEE4DB;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
+/* ===== HEADER ===== */
+
 .table-header{
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .table-header h2{
     font-size:28px;
-    color:#1e293b;
+    color:#6F4E37;
 }
+
+/* ===== TABLE ===== */
 
 table{
     width:100%;
     border-collapse:collapse;
     background:#fff;
+    border-radius:15px;
+    overflow:hidden;
 }
 
 thead{
-    background:#2563eb;
-    color:white;
+    background:#F3E8DD;
 }
 
 th{
     padding:15px;
     text-align:left;
+    color:#6F4E37;
+    font-size:13px;
+    white-space: nowrap;
 }
 
 td{
     padding:15px;
-    border-bottom:1px solid #eee;
+    border-bottom:1px solid #EEE4DB;
+    color:#8B7A6B;
+    font-size:13px;
+    vertical-align:middle;
 }
 
 tbody tr:hover{
-    background:#f8fafc;
+    background:#FCF8F5;
 }
 
+/* ===== STATUS ===== */
 
-/* tombol ACC */
+.status-pending{
+    color:#C58A00;
+    font-weight:600;
+}
+
+.status-approved{
+    color:#5E8C61;
+    font-weight:600;
+}
+
+.status-rejected{
+    color:#D97A7A;
+    font-weight:600;
+}
+
+/* ===== AKSI ===== */
+
+.aksi{
+    white-space:nowrap;
+}
+
 .acc{
     border:none;
-    background:#22c55e;
-    color:white;
-    padding:7px 12px;
-    border-radius:6px;
+    background:#7FB77E;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
     cursor:pointer;
     font-weight:600;
+    transition:.3s;
+    margin-right:6px;
 }
 
 .acc:hover{
-    background:#16a34a;
+    background:#659D63;
 }
 
-
-/* tombol Tolak */
 .tolak{
     border:none;
-    background:#ef4444;
-    color:white;
-    padding:7px 12px;
-    border-radius:6px;
+    background:#D97A7A;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
     cursor:pointer;
     font-weight:600;
+    transition:.3s;
+    margin-right:6px;
 }
 
 .tolak:hover{
-    background:#dc2626;
+    background:#C95E5E;
 }
 
-
-/* tombol Hapus */
 .hapus{
     border:none;
     background:none;
-    color:#ef4444;
-    font-weight:600;
+    color:#D97A7A;
     cursor:pointer;
+    font-weight:600;
+    transition:.3s;
 }
 
 .hapus:hover{
-    color:#dc2626;
+    color:#C95E5E;
+    text-decoration:underline;
 }
 
+/* ===== EMPTY ===== */
 
 .empty{
     text-align:center;
-    color:#64748b;
-    padding:20px;
+    padding:30px;
+    color:#8B7A6B;
 }
 
+/* ===== RESPONSIVE ===== */
 
 @media(max-width:768px){
 
@@ -225,7 +255,6 @@ tbody tr:hover{
     }
 
 }
-
 </style>
 
 @endsection

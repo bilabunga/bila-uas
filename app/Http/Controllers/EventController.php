@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -63,22 +64,27 @@ class EventController extends Controller
         return view('events.create', compact('categories'));
     }
 
+    // Tambah Event
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
             'tagline' => 'required',
             'description' => 'required',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'date' => 'required|date',
             'location' => 'required',
             'quota' => 'required|integer',
             'category_id' => 'required',
         ]);
 
+        $imageName = $request->file('image')->store('events', 'public');
+
         Event::create([
             'title' => $request->title,
             'tagline' => $request->tagline,
             'description' => $request->description,
+            'image' => $imageName,
             'date' => $request->date,
             'location' => $request->location,
             'quota' => $request->quota,
@@ -102,22 +108,36 @@ class EventController extends Controller
         return view('events.edit', compact('event', 'categories'));
     }
 
+    // Edit Event
     public function update(Request $request, Event $event)
     {
         $request->validate([
             'title' => 'required',
             'tagline' => 'required',
             'description' => 'required',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'date' => 'required|date',
             'location' => 'required',
             'quota' => 'required|integer',
             'category_id' => 'required',
         ]);
 
+        $imageName = $event->image;
+
+        if ($request->hasFile('image')) {
+
+            if ($event->image && Storage::disk('public')->exists($event->image)) {
+                Storage::disk('public')->delete($event->image);
+            }
+
+            $imageName = $request->file('image')->store('events', 'public');
+        }
+
         $event->update([
             'title' => $request->title,
             'tagline' => $request->tagline,
             'description' => $request->description,
+            'image' => $imageName,
             'date' => $request->date,
             'location' => $request->location,
             'quota' => $request->quota,
@@ -128,8 +148,13 @@ class EventController extends Controller
             ->with('success', 'Event berhasil diupdate.');
     }
 
+    // Hapus Event
     public function destroy(Event $event)
     {
+        if ($event->image && Storage::disk('public')->exists($event->image)) {
+            Storage::disk('public')->delete($event->image);
+        }
+
         $event->delete();
 
         return redirect()->route('admin.dashboard')

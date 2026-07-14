@@ -30,14 +30,15 @@
 
             <td>{{ $category->name }}</td>
 
-            <td>{{ optional($category->created_at)->format('d-m-Y') ??  '-' }}</td>
+            <td>{{ optional($category->created_at)->format('d-m-Y') ?? '-' }}</td>
 
-            <td>
+            <td class="aksi">
+
                 <a href="{{ route('categories.edit',$category->id) }}" class="edit">
                     Edit
                 </a>
 
-                |
+                <span class="separator">|</span>
 
                 <form action="{{ route('categories.destroy',$category->id) }}"
                       method="POST"
@@ -46,12 +47,16 @@
                     @csrf
                     @method('DELETE')
 
-                    <button class="hapus"
+                    <button type="submit"
+                        class="hapus"
                         onclick="return confirm('Hapus kategori ini?')">
+
                         Hapus
+
                     </button>
 
                 </form>
+
             </td>
 
         </tr>
@@ -59,7 +64,7 @@
         @empty
 
         <tr>
-            <td colspan="3" style="text-align:center;">
+            <td colspan="3" class="empty">
                 Belum ada kategori
             </td>
         </tr>
@@ -73,95 +78,120 @@
 </div>
 
 <style>
+    /* ===== CARD ===== */
 
-/* ===== TABLE GLOBAL (dipakai event & kategori) ===== */
+    .table-box{
+        background:#fff;
+        padding:25px;
+        border-radius:18px;
+        border:1px solid #EEE4DB;
+        box-shadow:0 8px 20px rgba(0,0,0,.06);
+    }
 
-.table-box{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
+    /* ===== HEADER ===== */
 
-.table-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
+    .table-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:25px;
+    }
 
-.table-header h2{
-    margin:0;
-    font-size:22px;
-    color:#1e293b;
-}
+    .table-header h2{
+        margin:0;
+        font-size:28px;
+        color:#6F4E37;
+    }
 
-/* tombol tambah */
-.btn{
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    padding:10px 18px;
-    border-radius:8px;
-    font-weight:600;
-    transition:.2s;
-}
+    /* ===== TOMBOL TAMBAH ===== */
 
-.btn:hover{
-    background:#1d4ed8;
-}
+    .btn{
+        display:inline-block;
+        background:#B88A6D;
+        color:#fff;
+        text-decoration:none;
+        padding:12px 22px;
+        border-radius:10px;
+        font-weight:600;
+        transition:.3s;
+    }
 
-/* table */
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border-radius:10px;
-    overflow:hidden;
-}
+    .btn:hover{
+        background:#A8795C;
+    }
 
-th{
-    background:#2563eb;
-    color:white;
-    padding:14px;
-    text-align:left;
-}
+    /* ===== TABLE ===== */
 
-td{
-    padding:14px;
-    border-bottom:1px solid #eee;
-}
+    table{
+        width:100%;
+        border-collapse:collapse;
+        background:#fff;
+        border-radius:15px;
+        overflow:hidden;
+    }
 
-/* aksi button */
-.edit{
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:bold;
-}
+    th{
+        background:#F3E8DD;
+        color:#6F4E37;
+        padding:15px;
+        text-align:left;
+    }
 
-.edit:hover{
-    color:#1d4ed8;
-}
+    td{
+        padding:15px;
+        border-bottom:1px solid #EEE4DB;
+        color:#8B7A6B;
+    }
 
-.hapus{
-    border:none;
-    background:none;
-    color:red;
-    cursor:pointer;
-    font-weight:bold;
-}
+    tbody tr:hover{
+        background:#FCF8F5;
+    }
 
-.hapus:hover{
-    color:#b91c1c;
-}
+    /* ===== AKSI ===== */
 
-/* empty state */
-.empty{
-    text-align:center;
-    padding:20px;
-    color:#64748b;
-}
+    .aksi{
+        white-space:nowrap;
+    }
 
+    .separator{
+        color:#B88A6D;
+        margin:0 8px;
+    }
+
+    .edit{
+        text-decoration:none;
+        color:#B88A6D;
+        font-weight:600;
+        transition:.3s;
+    }
+
+    .edit:hover{
+        color:#A8795C;
+        text-decoration:underline;
+    }
+
+    .hapus{
+        border:none;
+        background:none;
+        padding:0;
+        color:#D97A7A;
+        cursor:pointer;
+        font-weight:600;
+        transition:.3s;
+    }
+
+    .hapus:hover{
+        color:#C95E5E;
+        text-decoration:underline;
+    }
+
+    /* ===== EMPTY ===== */
+
+    .empty{
+        text-align:center;
+        padding:30px;
+        color:#8B7A6B;
+    }
 </style>
 
 @endsection

@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $events = Event::latest()->take(5)->get();
+        $events = Event::latest()->take(3)->get();
 
         $totalEvents = Event::count();
         $totalCategories = Category::count();

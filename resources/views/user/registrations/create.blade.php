@@ -46,63 +46,62 @@
 
 </div>
 
-@endsection
-
-
 <style>
-.register-container{
-    max-width:700px;
-    margin:50px auto;
-    padding:20px;
-}
+    .register-container{
+        max-width:700px;
+        margin:50px auto;
+        padding:20px;
+    }
 
-.register-card{
-    background:#fff;
-    padding:35px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.1);
-}
+    .register-card{
+        background:#fff;
+        padding:35px;
+        border-radius:15px;
+        box-shadow:0 5px 20px rgba(0,0,0,.1);
+    }
 
-.register-card h2{
-    margin-bottom:10px;
-}
+    .register-card h2{
+        margin-bottom:10px;
+    }
 
-.register-card p{
-    color:#777;
-    margin-bottom:25px;
-}
+    .register-card p{
+        color:#777;
+        margin-bottom:25px;
+    }
 
-.form-group{
-    margin-bottom:18px;
-}
+    .form-group{
+        margin-bottom:18px;
+    }
 
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:600;
-}
+    .form-group label{
+        display:block;
+        margin-bottom:8px;
+        font-weight:600;
+    }
 
-.form-group input,
-.form-group textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    outline:none;
-}
+    .form-group input,
+    .form-group textarea{
+        width:100%;
+        padding:12px;
+        border:1px solid #ddd;
+        border-radius:8px;
+        outline:none;
+    }
 
-.btn-register{
-    width:100%;
-    padding:14px;
-    background:#7a5c46;
-    color:white;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:16px;
-}
+    .btn-register{
+        width:100%;
+        padding:14px;
+        background:#7a5c46;
+        color:white;
+        border:none;
+        border-radius:8px;
+        cursor:pointer;
+        font-size:16px;
+    }
 
-.btn-register:hover{
-    background:#5f4635;
-}
+    .btn-register:hover{
+        background:#5f4635;
+    }
 </style>
+
+@endsection

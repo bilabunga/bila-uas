@@ -2,60 +2,50 @@
 
 @section('content')
 
-<!-- HERO -->
 <section class="hero">
-
-    <div class="hero-content">
+    <div class="overlay">
 
         <h1>Selamat Datang di Event Kampus</h1>
 
         <p>
-            Temukan berbagai seminar, workshop, lomba, dan kegiatan kampus
-            yang dapat mengembangkan kemampuan serta menambah pengalamanmu.
+            Temukan seminar, workshop, webinar, dan berbagai kegiatan kampus
+            yang dapat menambah pengalamanmu.
         </p>
 
         <a href="{{ route('user.events.index') }}" class="btn-hero">
-            Jelajahi Event
+            Jelajahi Event →
         </a>
-
     </div>
-
 </section>
 
-
-<!-- KATEGORI -->
 <section class="category-section">
 
-    <h2>Kategori Event</h2>
+    <div class="section-title">
+        <h2>Kategori Event</h2>
+    </div>
 
     <div class="category-list">
 
         <div class="category-card">
-            🎓
             <h4>Seminar</h4>
         </div>
 
         <div class="category-card">
-            💻
             <h4>Workshop</h4>
         </div>
 
         <div class="category-card">
-            🏆
-            <h4>Lomba</h4>
+            <h4>Webinar</h4>
         </div>
 
         <div class="category-card">
-            🤝
-            <h4>Organisasi</h4>
+            <h4>Talkshow</h4>
         </div>
 
     </div>
 
 </section>
 
-
-<!-- EVENT TERBARU -->
 <section class="event-section">
 
     <div class="section-header">
@@ -74,205 +64,416 @@
 
         <div class="event-card">
 
-            <h3>{{ $event->title }}</h3>
+            @if($event->image)
 
-            <p>{{ $event->tagline }}</p>
+                <img src="{{ asset('storage/'.$event->image) }}" class="event-image">
 
-            <span>
-                📅 {{ $event->date }}
-            </span>
+            @else
 
-            <span>
-                📍 {{ $event->location }}
-            </span>
+                <div class="image-empty">
+                    Tidak Ada Poster
+                </div>
 
-            <a href="{{ route('user.events.show',$event->id) }}">
-                Detail Event
-            </a>
+            @endif
+
+            <div class="event-content">
+
+                <span class="badge">
+                    {{ $event->category->name ?? 'Event' }}
+                </span>
+
+                <h3>{{ $event->title }}</h3>
+
+                <p>{{ $event->tagline }}</p>
+
+                <div class="info">
+
+                    <div>
+                        <strong>Tanggal</strong>
+                        <span>{{ $event->date }}</span>
+                    </div>
+
+                    <div>
+                        <strong>Lokasi</strong>
+                        <span>{{ $event->location }}</span>
+                    </div>
+
+                </div>
+
+                <a href="{{ route('user.events.show',$event->id) }}" class="btn-detail">
+                    Lihat Detail
+                </a>
+
+            </div>
 
         </div>
 
         @empty
 
-        <p>Belum ada event.</p>
+        <div class="empty">
+            Belum ada event.
+        </div>
 
         @endforelse
 
     </div>
 
 </section>
-
-@endsection
-
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* HERO */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#F8F5F2;
+}
+
+/* ================= HERO ================= */
+
 .hero{
-    background: linear-gradient(135deg,#2563eb,#1e40af);
+    width:100%;
+    height:450px;
+    margin:25px 0 50px;
+    border-radius:25px;
+    overflow:hidden;
+
+    background:
+        linear-gradient(rgba(95, 63, 33, 0.45), rgba(151, 125, 100, 0.45)),
+        url('/images/kampus.jpeg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    align-items:center;
+    padding:70px;
+}
+
+.overlay{
+    max-width:600px;
     color:#fff;
-    text-align:center;
-    padding:90px 20px;
 }
 
-.hero-content{
-    max-width:700px;
-    margin:auto;
-}
-
-.hero h1{
-    font-size:48px;
+.overlay h1{
+    font-size:52px;
+    font-weight:700;
+    color:#fff;
+    line-height:1.2;
     margin-bottom:20px;
+    text-shadow:0 3px 10px rgba(0,0,0,.5);
 }
 
-.hero p{
+.overlay p{
     font-size:18px;
     line-height:1.8;
-    margin-bottom:35px;
+    color:#fff;
+    text-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 
-.btn-hero{
-    display:inline-block;
-    padding:14px 35px;
-    background:#fff;
-    color:#2563eb;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:bold;
-    transition:.3s;
-}
+/* ================= KATEGORI ================= */
 
-.btn-hero:hover{
-    background:#f3f4f6;
-    transform:translateY(-3px);
-}
-
-/* KATEGORI */
 .category-section{
-    max-width:1200px;
-    margin:70px auto;
-    padding:0 20px;
+    margin:0 0 55px;
 }
 
-.category-section h2{
-    text-align:center;
-    margin-bottom:35px;
-    color:#1f2937;
+.section-title{
+    margin-bottom:22px;
+}
+
+.section-title h2{
+    font-size:28px;
+    color:#6F4E37;
+    font-weight:700;
 }
 
 .category-list{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
 }
 
 .category-card{
     background:#fff;
-    text-align:center;
-    padding:30px;
+    border:1px solid #EEE4DB;
     border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    font-size:40px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
     transition:.3s;
 }
 
-.category-card h4{
-    margin-top:15px;
-    color:#374151;
-    font-size:20px;
-}
-
 .category-card:hover{
-    transform:translateY(-8px);
+    transform:translateY(-5px);
+    box-shadow:0 10px 22px rgba(0,0,0,.08);
 }
 
-/* EVENT */
+.category-card h4{
+    color:#6F4E37;
+    font-size:18px;
+}
+
+/* ================= EVENT ================= */
+
 .event-section{
-    max-width:1200px;
-    margin:70px auto;
-    padding:0 20px;
+    margin-top:40px;
 }
 
 .section-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
 
 .section-header h2{
-    color:#1f2937;
+    color:#6F4E37;
+    font-size:26px;
 }
 
 .section-header a{
-    color:#2563eb;
     text-decoration:none;
-    font-weight:bold;
+    color:#B88A6D;
+    font-weight:600;
+    transition:.3s;
 }
+
+.section-header a:hover{
+    color:#8C6845;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+    .hero{
+        height:320px;
+        padding:30px;
+        margin-bottom:35px;
+    }
+
+    .overlay h1{
+        font-size:34px;
+    }
+
+    .overlay p{
+        font-size:15px;
+    }
+
+    .category-list{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+/* ===== EVENT ===== */
+
+.event-section{
+    margin-top:20px;
+}
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-header h2{
+    color:#6F4E37;
+    font-size:26px;
+}
+
+.section-header a{
+    text-decoration:none;
+    color:#B88A6D;
+    font-weight:600;
+}
+
+.section-header a:hover{
+    color:#8C6845;
+}
+
+/* GRID */
 
 .event-list{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(230px,250px));
+    gap:18px;
+    justify-content:flex-start;
 }
 
+/* CARD */
+
 .event-card{
+    width:250px;
     background:#fff;
     border-radius:15px;
-    padding:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    overflow:hidden;
+    border:1px solid #EEE4DB;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
     transition:.3s;
 }
 
 .event-card:hover{
-    transform:translateY(-8px);
+    transform:translateY(-5px);
 }
 
-.event-card h3{
-    color:#2563eb;
+.event-image{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+}
+
+.image-empty{
+    width:100%;
+    height:150px;
+    background:#EFE5DC;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#8B7A6B;
+    font-size:13px;
+}
+
+.event-content{
+    padding:15px;
+}
+
+.badge{
+    display:inline-block;
+    background:#F3E8DD;
+    color:#8A6448;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
     margin-bottom:10px;
 }
 
-.event-card p{
-    color:#6b7280;
+.event-content h3{
+    color:#6F4E37;
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.event-content p{
+    color:#8B7A6B;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:12px;
+}
+
+.info{
+    display:grid;
+    gap:8px;
     margin-bottom:15px;
 }
 
-.event-card span{
+.info strong{
     display:block;
-    margin-bottom:8px;
-    color:#374151;
+    color:#6F4E37;
+    font-size:12px;
+    margin-bottom:2px;
 }
 
-.event-card a{
-    display:inline-block;
-    margin-top:15px;
-    background:#2563eb;
-    color:#fff;
-    padding:10px 22px;
-    border-radius:8px;
+.info span{
+    display:block;
+    color:#8B7A6B;
+    font-size:12px;
+}
+
+/* BUTTON */
+
+.btn-detail{
+    display:block;
+    text-align:center;
     text-decoration:none;
+    background:#B88A6D;
+    color:#fff;
+    padding:9px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:600;
+    transition:.3s;
 }
 
-.event-card a:hover{
-    background:#1d4ed8;
+.btn-detail:hover{
+    background:#A8795C;
 }
 
-/* RESPONSIVE */
+.empty{
+    grid-column:1/-1;
+    background:#fff;
+    border:1px solid #EEE4DB;
+    border-radius:15px;
+    padding:30px;
+    text-align:center;
+    color:#8B7A6B;
+}
+
+.btn-hero{
+    display:inline-block;
+    margin-top:30px;
+    padding:15px 35px;
+    background:#B88A6D;
+    color:#fff;
+    text-decoration:none;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s ease;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.btn-hero:hover{
+    background:#A8795C;
+    transform:translateY(-3px);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:992px){
+
+    .event-list{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .event-card{
+        width:100%;
+    }
+
+}
+
 @media(max-width:768px){
 
-.hero h1{
-    font-size:34px;
-}
+    .home-header h1{
+        font-size:28px;
+    }
 
-.hero p{
-    font-size:16px;
-}
+    .category-list{
+        grid-template-columns:repeat(2,1fr);
+    }
 
-.section-header{
-    flex-direction:column;
-    gap:10px;
-}
+    .event-list{
+        grid-template-columns:1fr;
+    }
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .event-card{
+        width:100%;
+    }
 
 }
 
 </style>
+@endsection
